@@ -31,7 +31,7 @@ public class doExcl {
 
 	public static void writeFile(ArrayList<Order> listOrder) throws FileNotFoundException {
 		// 生成EXCEL并指定输出路径
-        OutputStream out = new FileOutputStream("C:\\Users\\milly\\Desktop\\金敏圭证件照.xlsx");
+        OutputStream out = new FileOutputStream("C:\\Users\\milly\\Desktop\\金曜汉 moodIndigo 二代夏日周边.xlsx");
         ExcelWriter writer = new ExcelWriter(out, ExcelTypeEnum.XLSX);
  
         // 设置SHEET
@@ -49,12 +49,7 @@ public class doExcl {
         titles.add(Arrays.asList("收件人"));
         titles.add(Arrays.asList("电话"));
         titles.add(Arrays.asList("地址"));
-/*        
-        titles.add(Arrays.asList("用户ID"));
-        titles.add(Arrays.asList("名称"));
-        titles.add(Arrays.asList("年龄"));
-        titles.add(Arrays.asList("生日"));
-*/
+
         table.setHead(titles);
 
         
@@ -73,8 +68,8 @@ public class doExcl {
 	}
 	
 	public static ArrayList<Order> readFile() throws UnsupportedEncodingException {
-        String pathname = "C:\\Users\\milly\\Desktop\\金敏圭证件照.txt";   
-  
+        String pathname = "C:\\Users\\milly\\Desktop\\txt\\金曜汉 moodIndigo 二代夏日周边.txt";
+          
         File  file = new File(pathname);
         String fileName = file.getName();
         String finalName = fileName.substring(0,fileName.length()-4);
@@ -84,8 +79,9 @@ public class doExcl {
         Order order = new Order();
         ArrayList<Order> listOrder = new ArrayList<Order>();
         boolean isStart = false;
+        boolean isStartCotinue = false;
         boolean isPhoneStart = false;
-        boolean isPhone = false;
+        boolean isPhoneEnd = false;
         boolean isAddress = false;
         boolean isId = false;
         boolean isTime = false;
@@ -102,22 +98,33 @@ public class doExcl {
                 	tempchar = (char)temp;
                 
                     if(tempchar != '\r') {
+                    	if(!Character.isDigit(tempchar) && isStart && !isStartCotinue && !isPhoneStart) {
+//                    		order.setBuyerName(order.getBuyerName() + buffer.toString());
+//                    		buffer = new StringBuffer();
+                    		isStartCotinue = true;
+                    	}
                     	
                     	if(tempchar == ' ' && !isStart) {    		
                     		order.setBuyerName(buffer.toString());
                     		buffer = new StringBuffer();
                     		isStart = true;
                     	}
-                    	if(Character.isDigit(tempchar) && isStart && !isPhoneStart) {
+                    	
+                    	if(tempchar == ' ' && isStartCotinue && isStart) {
+                    		order.setBuyerName(order.getBuyerName() + " " + buffer.toString());
+                    		buffer = new StringBuffer();
+                    		isStartCotinue = false;
+                    	}
+                    	if(Character.isDigit(tempchar) && isStart && !isStartCotinue && !isPhoneStart) {
                     		buffer = new StringBuffer();
                     		isPhoneStart = true;
                     	}
-                    	if(!Character.isDigit(tempchar) && isPhoneStart && !isPhone) {
+                    	if(!Character.isDigit(tempchar) && isPhoneStart && !isPhoneEnd) {
                     		order.setBuyerPhone(buffer.toString());
                     		buffer = new StringBuffer();
-                    		isPhone = true;
+                    		isPhoneEnd = true;
                     	}
-                    	if(tempchar=='订' && isPhone && !isAddress) {
+                    	if(tempchar=='订' && isPhoneEnd && !isAddress) {
                     		order.setBuyerAddress(buffer.toString());
                     		buffer = new StringBuffer();
                     		isAddress = true;
@@ -151,8 +158,9 @@ public class doExcl {
                     	}
                     	if(!Character.isDigit(tempchar) && tempchar != '.' && isEnd2) {
                     		isStart = false;
+                    		isStartCotinue = false;
                     		isPhoneStart = false;
-                            isPhone = false;
+                            isPhoneEnd = false;
                             isAddress = false;
                             isId = false;
                             isTime = false;
@@ -163,7 +171,7 @@ public class doExcl {
                             order = new Order();
                     	}
              
-                    	if(tempchar != '\n' && tempchar != ' ') {
+                    	if((tempchar != '\n' && tempchar != ' ') || isStartCotinue) {
                     		buffer.append(tempchar);
                     	}
                     }
