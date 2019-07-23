@@ -31,7 +31,7 @@ public class doExcl {
 
 	public static void writeFile(ArrayList<Order> listOrder) throws FileNotFoundException {
 		// 生成EXCEL并指定输出路径
-        OutputStream out = new FileOutputStream("C:\\Users\\milly\\Desktop\\金曜汉 moodIndigo 二代夏日周边.xlsx");
+        OutputStream out = new FileOutputStream("C:\\Users\\milly\\Desktop\\孙东杓饭制证件照2.0.xlsx");
         ExcelWriter writer = new ExcelWriter(out, ExcelTypeEnum.XLSX);
  
         // 设置SHEET
@@ -68,7 +68,7 @@ public class doExcl {
 	}
 	
 	public static ArrayList<Order> readFile() throws UnsupportedEncodingException {
-        String pathname = "C:\\Users\\milly\\Desktop\\txt\\金曜汉 moodIndigo 二代夏日周边.txt";
+        String pathname = "C:\\Users\\milly\\Desktop\\txt\\孙东杓饭制证件照2.0.txt";
           
         File  file = new File(pathname);
         String fileName = file.getName();
