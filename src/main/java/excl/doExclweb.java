@@ -20,7 +20,7 @@ import com.alibaba.excel.support.ExcelTypeEnum;
 
 import excl.order.Order;
 
-public class doExcl {
+public class doExclweb {
 
 	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
 		ArrayList<Order> listOrder = new ArrayList<Order>();
@@ -31,7 +31,7 @@ public class doExcl {
 
 	public static void writeFile(ArrayList<Order> listOrder) throws FileNotFoundException {
 		// 生成EXCEL并指定输出路径
-        OutputStream out = new FileOutputStream("C:\\Users\\milly\\Desktop\\金宇硕饭绘贴纸.xlsx");
+        OutputStream out = new FileOutputStream("C:\\Users\\milly\\Desktop\\孙东杓YOUTH 1set CHEERING反光手幅.xlsx");
         ExcelWriter writer = new ExcelWriter(out, ExcelTypeEnum.XLSX);
  
         // 设置SHEET
@@ -68,7 +68,7 @@ public class doExcl {
 	}
 	
 	public static ArrayList<Order> readFile() throws UnsupportedEncodingException {
-        String pathname = "C:\\Users\\milly\\Desktop\\txt\\金宇硕饭绘贴纸.txt";
+        String pathname = "C:\\Users\\milly\\Desktop\\txt\\孙东杓YOUTH 1set CHEERING反光手幅.txt";
           
         File  file = new File(pathname);
         String fileName = file.getName();
@@ -79,14 +79,18 @@ public class doExcl {
         Order order = new Order();
         ArrayList<Order> listOrder = new ArrayList<Order>();
         boolean isStart = false;
-        boolean isStartCotinue = false;
-        boolean isPhoneStart = false;
-        boolean isPhoneEnd = false;
+        boolean isStartColon = false;
+        boolean isPhone = false;
         boolean isAddress = false;
+        boolean isAddress_Xiu = false;
+        boolean isAddress_Di = false;
+        boolean isEndAddress = false;
+        boolean isNearId = false;
         boolean isId = false;
+        boolean isEndId = false;
         boolean isTime = false;
-        boolean isEnd1 = false;
-        boolean isEnd2 = false;
+        boolean isEnd = false;
+
         try {
 
             reader = new InputStreamReader(new FileInputStream(file), "gbk");
@@ -98,80 +102,102 @@ public class doExcl {
                 	tempchar = (char)temp;
                 
                     if(tempchar != '\r') {
-                    	if(!Character.isDigit(tempchar) && isStart && !isStartCotinue && !isPhoneStart) {
-//                    		order.setBuyerName(order.getBuyerName() + buffer.toString());
-//                    		buffer = new StringBuffer();
-                    		isStartCotinue = true;
-                    	}
-                    	
-                    	if(tempchar == ' ' && !isStart) {    		
-                    		order.setBuyerName(buffer.toString());
-                    		buffer = new StringBuffer();
+                    	if (tempchar=='址' && !isStart) {
                     		isStart = true;
                     	}
                     	
-                    	if(tempchar == ' ' && isStartCotinue && isStart) {
-                    		order.setBuyerName(order.getBuyerName() + " " + buffer.toString());
+                    	if (tempchar=='：' && !isStartColon && isStart) {
                     		buffer = new StringBuffer();
-                    		isStartCotinue = false;
+                    		isStartColon = true;
                     	}
-                    	if(Character.isDigit(tempchar) && isStart && !isStartCotinue && !isPhoneStart) {
+                    	
+                    	if (tempchar=='，' && isStartColon && !isPhone) {
+                    		order.setBuyerName(buffer.toString().substring(1));
                     		buffer = new StringBuffer();
-                    		isPhoneStart = true;
+                    		isPhone = true;
                     	}
-                    	if(!Character.isDigit(tempchar) && isPhoneStart && !isPhoneEnd) {
+                    	                   	
+                    	if (tempchar=='，' && buffer.length() != 0 && isPhone && !isAddress) {
                     		order.setBuyerPhone(buffer.toString());
-                    		buffer = new StringBuffer();
-                    		isPhoneEnd = true;
-                    	}
-                    	if(tempchar=='订' && isPhoneEnd && !isAddress) {
-                    		order.setBuyerAddress(buffer.toString());
                     		buffer = new StringBuffer();
                     		isAddress = true;
                     	}
-                    	if(tempchar=='下' && isAddress && !isId) {
-                    		String id = buffer.toString().substring(5, buffer.length());
-                    		order.setOrderId(id);
+                    	
+                    	if (tempchar=='修' && isAddress && !isEndAddress) {
+                    		isAddress_Xiu = true;
+                    	}
+                    	
+                    	if (tempchar=='改' && isAddress && isAddress_Xiu && !isEndAddress) {
+                    		order.setBuyerAddress(buffer.toString().substring(0,buffer.toString().length()-1));
+                    		buffer = new StringBuffer();
+                    		isEndAddress = true;
+                    	}
+                    	
+                    	if (tempchar=='地' && isAddress && !isEndAddress) {
+                    		isAddress_Di = true;
+                    	}
+                    	
+                    	if (tempchar=='址' && isAddress && isAddress_Di && !isEndAddress) {
+                    		order.setBuyerAddress(buffer.toString().substring(0,buffer.toString().length()-1));
+                    		buffer = new StringBuffer();
+                    		isEndAddress = true;
+                    	}
+                    	
+                    	if (tempchar=='下' && isAddress && !isEndAddress) {
+                    		order.setBuyerAddress(buffer.toString().substring(0,buffer.toString().length()-6));
+                    		buffer = new StringBuffer();
+                    		isEndAddress = true;
+                    	}
+                    	
+                    	if (tempchar=='编' && isEndAddress && !isNearId) {
+                    		isNearId = true;
+                    	}
+                    	
+                    	if (tempchar=='：' && isNearId && !isId) {
                     		buffer = new StringBuffer();
                     		isId = true;
                     	}
-                    	if(tempchar=='商' && isId && !isTime) {
-                    		String time = buffer.toString().substring(5, 15);
-                    		order.setOrderTime(time);
+                    	
+                    	if (tempchar=='下' && isId && !isEndId) {
+                    		order.setOrderId(buffer.toString().substring(1));
+                    		buffer = new StringBuffer();
+                    		isEndId = true;
+                    	}
+                    	
+                    	if (tempchar=='：' && isEndId && !isTime) {
                     		buffer = new StringBuffer();
                     		isTime = true;
                     	}
-                    	if(tempchar=='订' && isTime && !isEnd1) {
-                    		isEnd1 = true;
-                    		continue;
+                    	
+                    	if (tempchar==':' && buffer.length() != 0 && isTime && !isEnd) {
+                    		String time = buffer.toString().substring(1, 11);
+                    		order.setOrderTime(time);
+                    		isEnd = true;
                     	}
-                    	if(tempchar=='备' && isEnd1) {
-                    		isEnd1 = false;
-                    		continue;
-                    	}
-                    	if(tempchar=='.' && isEnd1 && !isEnd2) {
-                    		isEnd2 = true;
+             
+                    	if(isEnd) {
                     		order.setNum(listOrder.size() + 1);
                     		order.setOrderName(finalName);
                             listOrder.add(order);
-                    		continue;
-                    	}
-                    	if(!Character.isDigit(tempchar) && tempchar != '.' && isEnd2) {
-                    		isStart = false;
-                    		isStartCotinue = false;
-                    		isPhoneStart = false;
-                            isPhoneEnd = false;
-                            isAddress = false;
-                            isId = false;
-                            isTime = false;
-                            isEnd1 = false;
-                            isEnd2 = false;
-                            buffer = new StringBuffer();
                             
+                            isStart = false;
+                            isStartColon = false;
+                            isPhone = false;
+                            isAddress = false;
+                            isAddress_Xiu = false;
+                            isAddress_Di = false;
+                            isEndAddress = false;
+                            isNearId = false;
+                            isId = false;
+                            isEndId = false;
+                            isTime = false;
+                            isEnd = false;
+                            
+                            buffer = new StringBuffer();     
                             order = new Order();
                     	}
-             
-                    	if((tempchar != '\n' && tempchar != ' ') || isStartCotinue) {
+              
+                    	if ((tempchar != '\n' && tempchar != ' ' && tempchar != '，')) {
                     		buffer.append(tempchar);
                     	}
                     }
