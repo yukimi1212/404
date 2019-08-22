@@ -29,18 +29,14 @@ public class doExclweb {
 			writeFile(listOrder);
 	}
 
-	public static void writeFile(ArrayList<Order> listOrder) throws FileNotFoundException {
-		// 生成EXCEL并指定输出路径
-        OutputStream out = new FileOutputStream("C:\\Users\\milly\\Desktop\\李垠尚mb.E 终场决赛夜反光手幅.xlsx");
-        ExcelWriter writer = new ExcelWriter(out, ExcelTypeEnum.XLSX);
- 
-        // 设置SHEET
-        Sheet sheet = new Sheet(1, 0);
-        sheet.setSheetName("sheet1");
- 
-        // 设置标题
-        Table table = new Table(1);
-        List<List<String>> titles = new ArrayList<List<String>>();
+	public static void writeFile(ArrayList<Order> listOrder) throws FileNotFoundException {	
+        OutputStream out = new FileOutputStream("C:\\Users\\milly\\Desktop\\txt\\AB6IX 林煐岷 MY MINI HAPPINESS 反光手幅.xlsx");
+        ExcelWriter writer = new ExcelWriter(out, ExcelTypeEnum.XLSX);	// 生成EXCEL并指定输出路径
+        
+        Sheet sheet = new Sheet(1, 0);	
+        sheet.setSheetName("sheet1");	// 设置SHEET      
+        Table table = new Table(1);		// 设置标题
+        List<List<String>> titles = new ArrayList<List<String>>();	
  
         titles.add(Arrays.asList("数量"));
         titles.add(Arrays.asList("时间"));
@@ -49,26 +45,24 @@ public class doExclweb {
         titles.add(Arrays.asList("收件人"));
         titles.add(Arrays.asList("电话"));
         titles.add(Arrays.asList("地址"));
-
         table.setHead(titles);
 
-        
         Integer writeCount = listOrder.size();
         List<List<String>> userList = new ArrayList<List<String>>();
         List<String> listString;
         for (int j = 0; j < writeCount; j++) {
         	listString = Arrays.asList(listOrder.get(j).getNum() + "", listOrder.get(j).getOrderTime(), listOrder.get(j).getOrderId(), listOrder.get(j).getOrderName(), listOrder.get(j).getBuyerName(), listOrder.get(j).getBuyerPhone(), listOrder.get(j).getBuyerAddress()); 
         	System.out.println(listString);
-        	userList.add(listString);          
+        	userList.add(listString);
         }
-        writer.write0(userList, sheet, table); 	
+        writer.write0(userList, sheet, table);
         
         writer.finish();
         System.out.println(" ***success!*** ");
 	}
 	
 	public static ArrayList<Order> readFile() throws UnsupportedEncodingException {
-        String pathname = "C:\\Users\\milly\\Desktop\\txt\\李垠尚mb.E 终场决赛夜反光手幅.txt";
+        String pathname = "C:\\Users\\milly\\Desktop\\txt\\AB6IX 林煐岷 MY MINI HAPPINESS 反光手幅.txt";
           
         File  file = new File(pathname);
         String fileName = file.getName();
@@ -143,7 +137,7 @@ public class doExclweb {
                     		isEndAddress = true;
                     	}
                     	
-                    	if (tempchar=='下' && isAddress && !isEndAddress) {
+                    	if (tempchar=='账' && isAddress && !isEndAddress) {
                     		order.setBuyerAddress(buffer.toString().substring(0,buffer.toString().length()-6));
                     		buffer = new StringBuffer();
                     		isEndAddress = true;
