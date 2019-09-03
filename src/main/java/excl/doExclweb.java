@@ -30,7 +30,7 @@ public class doExclweb {
 	}
 
 	public static void writeFile(ArrayList<Order> listOrder) throws FileNotFoundException {	
-        OutputStream out = new FileOutputStream("C:\\Users\\milly\\Desktop\\txt\\AB6IX 林煐岷 MY MINI HAPPINESS 反光手幅.xlsx");
+        OutputStream out = new FileOutputStream("C:\\Users\\milly\\Desktop\\txt\\林煐岷 YOU ARE MY PACA 三代反光手幅.xlsx");
         ExcelWriter writer = new ExcelWriter(out, ExcelTypeEnum.XLSX);	// 生成EXCEL并指定输出路径
         
         Sheet sheet = new Sheet(1, 0);	
@@ -62,7 +62,7 @@ public class doExclweb {
 	}
 	
 	public static ArrayList<Order> readFile() throws UnsupportedEncodingException {
-        String pathname = "C:\\Users\\milly\\Desktop\\txt\\AB6IX 林煐岷 MY MINI HAPPINESS 反光手幅.txt";
+        String pathname = "C:\\Users\\milly\\Desktop\\txt\\林煐岷 YOU ARE MY PACA 三代反光手幅.txt";
           
         File  file = new File(pathname);
         String fileName = file.getName();
