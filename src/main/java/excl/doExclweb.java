@@ -21,6 +21,8 @@ import com.alibaba.excel.support.ExcelTypeEnum;
 import excl.order.Order;
 
 public class doExclweb {
+	
+	public static String fileName = "young k youngandnew1219手幅";
 
 	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
 		ArrayList<Order> listOrder = new ArrayList<Order>();
@@ -30,7 +32,7 @@ public class doExclweb {
 	}
 
 	public static void writeFile(ArrayList<Order> listOrder) throws FileNotFoundException {	
-        OutputStream out = new FileOutputStream("C:\\Users\\milly\\Desktop\\txt\\林煐岷 YOU ARE MY PACA 三代反光手幅.xlsx");
+        OutputStream out = new FileOutputStream("C:\\Users\\milly\\Desktop\\txt\\"+ fileName + ".xlsx");
         ExcelWriter writer = new ExcelWriter(out, ExcelTypeEnum.XLSX);	// 生成EXCEL并指定输出路径
         
         Sheet sheet = new Sheet(1, 0);	
@@ -62,12 +64,10 @@ public class doExclweb {
 	}
 	
 	public static ArrayList<Order> readFile() throws UnsupportedEncodingException {
-        String pathname = "C:\\Users\\milly\\Desktop\\txt\\林煐岷 YOU ARE MY PACA 三代反光手幅.txt";
+        String pathname = "C:\\Users\\milly\\Desktop\\txt\\定金表格信息复制.txt";
           
         File  file = new File(pathname);
-        String fileName = file.getName();
-        String finalName = fileName.substring(0,fileName.length()-4);
-        System.out.println(finalName);
+        System.out.println(fileName);
         Reader reader = null;
         StringBuffer buffer = new StringBuffer();
         Order order = new Order();
@@ -171,7 +171,7 @@ public class doExclweb {
              
                     	if(isEnd) {
                     		order.setNum(listOrder.size() + 1);
-                    		order.setOrderName(finalName);
+                    		order.setOrderName(fileName);
                             listOrder.add(order);
                             
                             isStart = false;
