@@ -22,8 +22,8 @@ import excl.order.Order;
 
 public class doExclweb {
 	
-	public static String fileName = "手幅 小卡收纳册";
-
+	public static String fileName = "车银优 330 DEGREE 1st photo blanket";
+	
 	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
 		ArrayList<Order> listOrder = new ArrayList<Order>();
 		listOrder = readFile();
