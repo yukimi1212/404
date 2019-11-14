@@ -22,7 +22,7 @@ import excl.order.Order;
 
 public class doExclweb {
 	
-	public static String fileName = "裴珠泫 Carrot Irene🐇🥕";
+	public static String fileName = "田雄 woongdez_vous_ FOR woong";
 	
 	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
 		ArrayList<Order> listOrder = new ArrayList<Order>();
@@ -65,7 +65,7 @@ public class doExclweb {
 	
 	public static ArrayList<Order> readFile() throws UnsupportedEncodingException {
         String pathname = "C:\\Users\\milly\\Desktop\\txt\\定金表格信息复制.txt";
-          
+//        String pathname = "C:\\Users\\milly\\Desktop\\txt\\详情.txt";  
         File  file = new File(pathname);
         System.out.println(fileName);
         Reader reader = null;
