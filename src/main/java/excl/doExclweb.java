@@ -22,7 +22,7 @@ import excl.order.Order;
 
 public class doExclweb {
 	
-	public static String fileName = "BB LISA CHEERING KIT";
+	public static String fileName = "JISOO FirstSnow Cheering Kit";
 	
 	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
 		ArrayList<Order> listOrder = new ArrayList<Order>();
