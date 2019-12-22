@@ -22,7 +22,7 @@ import excl.order.Order;
 
 public class doExclweb {
 	
-	public static String fileName = "金东贤 NINE FEVER 反光手幅 [库存三套]";
+	public static String fileName = "泰妍 Bebe Taengther 15cm娃 二次入金";
 	
 	public static void main(String[] args) throws FileNotFoundException, UnsupportedEncodingException {
 		ArrayList<Order> listOrder = new ArrayList<Order>();
